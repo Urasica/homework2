@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+
+<head th:insert="~{common :: commonHead}">
+    <title>Product Manager</title>
+    <style>
+        h2 {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+    <div class="text-end">
+        <form th:action="@{/}" method="GET">
+            <input type="submit" value="홈으로" class="btn btn-primary"/>
+        </form>
+    </div>
+
+
+    <h2>전체 사용자 목록</h2>
+
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>uid</th>
+            <th>email</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.id}">uid</td>
+            <td th:text="${user.email}">email</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Bootstrap JS fragment 삽입 -->
+<div th:insert="~{common :: commonScript}"></div>
+</body>
+</html>
