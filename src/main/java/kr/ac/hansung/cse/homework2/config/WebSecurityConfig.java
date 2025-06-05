@@ -1,5 +1,6 @@
 package kr.ac.hansung.cse.homework2.config;
 
+import kr.ac.hansung.cse.homework2.handler.CustomAuthenticationSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,7 +16,10 @@ import org.springframework.security.web.SecurityFilterChain;
 public class WebSecurityConfig {
 
     @Autowired
-    private UserDetailsService customUserDetailsService;
+    private UserDetailsService customUserDetailsService;;
+
+    @Autowired
+    private CustomAuthenticationSuccessHandler customSuccessHandler;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -43,13 +47,13 @@ public class WebSecurityConfig {
         http
                 .authorizeHttpRequests(authz -> authz
                         .requestMatchers(PUBLIC_MATCHERS).permitAll()
-                        .requestMatchers("/", "/home", "/signup").permitAll()
+                        .requestMatchers("/", "/signup").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin(formLogin -> formLogin
                         .loginPage("/login")
-                        .defaultSuccessUrl("/home")
+                        .successHandler(customSuccessHandler)
                         .failureUrl("/login?error")
                         .permitAll()
                 )

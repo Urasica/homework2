@@ -5,6 +5,7 @@ import kr.ac.hansung.cse.homework2.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,4 +31,14 @@ public class HomeController {
 
         return "adminhome";
     }
+
+    @GetMapping("/login")
+    public String loginPage(@RequestParam(required = false) String username,
+                            @RequestParam(required = false) String message,
+                            Model model) {
+        model.addAttribute("username", username);
+        model.addAttribute("message", message);
+        return "login";
+    }
+
 }

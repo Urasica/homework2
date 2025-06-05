@@ -1,10 +1,12 @@
 package kr.ac.hansung.cse.homework2.controller;
 
+import jakarta.validation.Valid;
 import kr.ac.hansung.cse.homework2.entity.Product;
 import kr.ac.hansung.cse.homework2.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -43,11 +45,28 @@ public class ProductController {
         return "edit_product";
     }
 
-    // @ModelAttribute는  Form data (예: name=Laptop&brand=Samsung&madeIn=Korea&price=1000.00)를 Product 객체
-    // @RequestBody는 HTTP 요청 본문에 포함된
-    //  JSON 데이터(예: {"name": "Laptop", "brand": "Samsung", "madeIn": "Korea", "price": 1000.00})를 Product 객체에 매핑
     @PostMapping("/save")
-    public String saveProduct(@ModelAttribute("product") Product product) {
+    public String saveProduct(@Valid @ModelAttribute("product") Product product, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            System.out.println("검증 오류 발생:");
+            bindingResult.getAllErrors().forEach(e -> System.out.println(e.getDefaultMessage()));
+            return "new_product";
+        }
+
+        service.save(product);
+
+        return "redirect:/products";
+    }
+
+    @PostMapping("/edit")
+    public String editProduct(@Valid @ModelAttribute("product") Product product, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            System.out.println("검증 오류 발생:");
+            bindingResult.getAllErrors().forEach(e -> System.out.println(e.getDefaultMessage()));
+            return "edit_product";
+        }
 
         service.save(product);
 

@@ -23,8 +23,8 @@
             <h1 class="text-center mb-4">로그인</h1>
 
             <form method="post" th:action="@{/login}">
-                <div th:if="${param.error}" class="alert alert-danger" role="alert">
-                    Invalid Email and Password.
+                <div th:if="${param.error}" class="alert alert-danger">
+                    <span>이메일 또는 비밀번호가 잘못되었습니다.</span>
                 </div>
 
                 <div th:if="${param.logout}" class="alert alert-info" role="alert">
@@ -32,7 +32,7 @@
                 </div>
 
                 <div class="form-floating mb-2">
-                    <input type="email" id="username" name="username" class="form-control" placeholder="Email" required autofocus>
+                    <input type="email" id="username" name="username" class="form-control" placeholder="Email" th:value="${param.username}" required autofocus>
                     <label for="username">Email address</label>
                 </div>
 

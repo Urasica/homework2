@@ -13,8 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 
-// 인증 관리자는 UserDetailsService 를 통해 UserDetails 객체를 획득하고
-// 이 UserDetails 객체에서 인증 및 인가에 필요한 정보를 추출하여 사용한다.
 @Service
 @Transactional
 public class CustomUserDetailsService implements UserDetailsService
